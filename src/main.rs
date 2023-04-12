@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
 fn main() {
+    // TODO: parse hashmap from json/toml
     #[rustfmt::skip]
-    let kaos: HashMap<&str, &str> = HashMap::from_iter([
+    let unicode_map: HashMap<&str, &str> = HashMap::from_iter([
         (r#"┬─┬ノ( º _ ºノ)"#, "Table back"),
         (r#"Σ(▼□▼メ)"#, "Anger"),
         (r#"ლ(ಠ益ಠ)ლ"#, "why"),
@@ -222,8 +223,8 @@ fn main() {
     ]);
 
     println!("const ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(");
-    let emoji_count = kaos.len();
-    for (idx, (k, name)) in kaos.into_iter().enumerate() {
+    let unicode_count = unicode_map.len();
+    for (idx, (k, name)) in unicode_map.into_iter().enumerate() {
         let mut n = name.to_lowercase();
         n.retain(|c| c != ' ');
         print!("\tUCIS_SYM(\"{}\", ", n);
@@ -235,7 +236,7 @@ fn main() {
             }
         }
         print!(")");
-        if idx + 1 < emoji_count {
+        if idx + 1 < unicode_count {
             print!(",");
         }
         print!(" /* {k} */\n");
